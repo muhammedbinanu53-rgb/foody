@@ -1,0 +1,553 @@
+.controllerPage {
+  min-height: 700px;
+  padding: 55px 0;
+  background: #fafafa;
+}
+
+.controllerContainer {
+  width: min(1150px, 92%);
+  margin: 0 auto;
+}
+
+.controllerLogin {
+  width: min(500px, 92%);
+  margin: 0 auto;
+}
+
+.controllerBack {
+  border: none;
+  background: transparent;
+  color: #f97316;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.controllerLoginCard {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 22px;
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.controllerLogo {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  background: #fff7ed;
+  border-radius: 17px;
+  font-size: 1.7rem;
+  margin-bottom: 18px;
+}
+
+.controllerEyebrow {
+  color: #f97316;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  margin-bottom: 7px;
+}
+
+.controllerLoginCard h1,
+.controllerHeader h1 {
+  color: #171717;
+  margin-bottom: 8px;
+}
+
+.controllerLoginCard > p:not(.controllerEyebrow),
+.controllerHeader p:not(.controllerEyebrow) {
+  color: #737373;
+  margin-bottom: 25px;
+}
+
+.controllerLoginCard label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 750;
+  color: #171717;
+}
+
+.controllerLoginCard input {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 11px;
+  padding: 14px;
+  outline: none;
+  margin-bottom: 18px;
+}
+
+.controllerLoginCard input:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+.controllerPrimary,
+.confirmPaymentButton {
+  border: none;
+  background: #f97316;
+  color: white;
+  padding: 13px 18px;
+  border-radius: 10px;
+  font-weight: 850;
+  transition: 0.2s ease;
+}
+
+.controllerPrimary {
+  width: 100%;
+}
+
+.controllerPrimary:hover,
+.confirmPaymentButton:hover {
+  background: #ea580c;
+}
+
+.controllerPrimary:disabled,
+.confirmPaymentButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.controllerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.controllerHeaderButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.controllerRefresh,
+.controllerLogout {
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-weight: 800;
+}
+
+.controllerRefresh {
+  border: 1px solid #fed7aa;
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.controllerLogout {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.controllerSuccess,
+.controllerError {
+  padding: 13px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.controllerSuccess {
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.controllerError {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.controllerStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.controllerStats > div {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.controllerStats span {
+  display: block;
+  color: #737373;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+.controllerStats strong {
+  color: #171717;
+  font-size: 1.8rem;
+}
+
+.controllerOrders {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.controllerOrder {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 18px;
+  padding: 23px;
+}
+
+.controllerOrder.pending {
+  border-color: #fed7aa;
+  box-shadow: 0 5px 20px rgba(249, 115, 22, 0.08);
+}
+
+.orderTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.orderNumber {
+  color: #f97316;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.orderTop h2 {
+  color: #171717;
+  margin-top: 5px;
+}
+
+.orderTop p {
+  color: #737373;
+}
+
+.statusBadge {
+  height: fit-content;
+  padding: 7px 10px;
+  border-radius: 50px;
+  background: #f5f5f5;
+  color: #737373;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.statusBadge.pending {
+  color: #c2410c;
+  background: #ffedd5;
+}
+
+.statusBadge.confirmed {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.orderDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 20px 0;
+}
+
+.orderDetailsGrid span,
+.orderAddress span {
+  display: block;
+  color: #737373;
+  font-size: 0.78rem;
+  margin-bottom: 4px;
+}
+
+.orderDetailsGrid strong,
+.orderAddress strong {
+  color: #171717;
+}
+
+.reportedAmount {
+  color: #f97316 !important;
+}
+
+.orderAddress {
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.orderFoods {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 18px;
+}
+
+.orderFoods h3 {
+  margin-bottom: 10px;
+}
+
+.controllerFood {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 8px 0;
+  color: #737373;
+}
+
+.controllerFood strong {
+  color: #171717;
+}
+
+.controllerOrderActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.viewOrderButton {
+  border: 1px solid #e5e5e5;
+  background: white;
+  color: #171717;
+  padding: 11px 15px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.viewOrderButton:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.rejectPaymentButton {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 11px 15px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.controllerEmpty {
+  text-align: center;
+  background: white;
+  border: 1px dashed #e5e5e5;
+  border-radius: 18px;
+  padding: 60px 20px;
+}
+
+.controllerEmpty > div {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.controllerEmpty h2 {
+  margin-bottom: 5px;
+}
+
+.controllerEmpty p {
+  color: #737373;
+}
+
+/* =========================================================
+   RECEIPT MODAL
+   ========================================================= */
+
+.receiptOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.65);
+  overflow-y: auto;
+}
+
+.receiptModal {
+  position: relative;
+  width: min(600px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.receiptClose {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  background: #f5f5f5;
+  color: #171717;
+  font-size: 1.4rem;
+}
+
+.receiptModal h2 {
+  margin-bottom: 15px;
+}
+
+.receiptStatus {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 50px;
+  background: #fff7ed;
+  color: #ea580c;
+  font-size: 0.75rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.receiptRows {
+  border-top: 1px solid #e5e5e5;
+}
+
+.receiptRows > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.receiptRows span {
+  color: #737373;
+}
+
+.receiptRows strong {
+  text-align: right;
+  color: #171717;
+}
+
+.receiptFoodList {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.receiptFoodList h3 {
+  margin-bottom: 10px;
+}
+
+.receiptFood {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 9px 0;
+  color: #737373;
+}
+
+.receiptFood strong {
+  color: #171717;
+}
+
+.receiptConfirmedBox {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.receiptConfirmedBox strong,
+.receiptConfirmedBox span {
+  display: block;
+}
+
+.receiptConfirmedBox span {
+  margin-top: 4px;
+  font-size: 0.8rem;
+}
+
+.fullControllerButton {
+  width: 100%;
+}
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .controllerPage {
+    padding: 35px 0;
+  }
+
+  .controllerHeader {
+    display: block;
+  }
+
+  .controllerHeaderButtons {
+    margin-top: 15px;
+  }
+
+  .controllerStats {
+    grid-template-columns: 1fr;
+  }
+
+  .orderTop {
+    display: block;
+  }
+
+  .statusBadge {
+    display: inline-block;
+    margin-top: 12px;
+  }
+
+  .orderDetailsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .controllerOrderActions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .viewOrderButton,
+  .rejectPaymentButton,
+  .confirmPaymentButton {
+    width: 100%;
+  }
+
+  .receiptModal {
+    padding: 22px;
+  }
+
+  .receiptRows > div {
+    display: block;
+  }
+
+  .receiptRows strong {
+    display: block;
+    text-align: left;
+    margin-top: 3px;
+  }
+}
+
+@media (max-width: 450px) {
+  .controllerLoginCard {
+    padding: 25px;
+  }
+
+  .orderDetailsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .controllerHeaderButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .controllerFood,
+  .receiptFood {
+    font-size: 0.88rem;
+  }
+}
