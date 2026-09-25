@@ -4,7 +4,7 @@ import Controller from "./Controller";
 import "./App.css";
 
 const API_URL =
-  import.meta.env.VITE_API_URL || "http://192.168.166.204:5000";
+  import.meta.env.VITE_API_URL || "https://foody-backend-s4vt.onrender.com";
 
 const PAYMENT_METHODS = [
   {
