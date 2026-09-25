@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="orange" x1="70" y1="40" x2="450" y2="480">
+      <stop offset="0%" stop-color="#FFB52E"/>
+      <stop offset="50%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#F45100"/>
+    </linearGradient>
+
+    <filter id="shadow">
+      <feDropShadow
+        dx="0"
+        dy="8"
+        stdDeviation="8"
+        flood-opacity="0.18"
+      />
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="115" fill="url(#orange)"/>
+
+  <circle
+    cx="100"
+    cy="90"
+    r="120"
+    fill="#FFFFFF"
+    opacity="0.08"
+  />
+
+  <g filter="url(#shadow)">
+    <path
+      d="M175 105
+         L175 205
+         C175 220 184 230 198 233
+         L198 270
+         L198 315
+         C198 327 207 336 219 336
+         C231 336 240 327 240 315
+         L240 233
+         C254 230 263 220 263 205
+         L263 105
+         L244 105
+         L244 178
+         L234 178
+         L234 105
+         L215 105
+         L215 178
+         L204 178
+         L204 105
+         Z"
+      fill="#FFFFFF"
+    />
+
+    <path
+      d="M263 135
+         C292 112 330 115 352 138
+         C372 159 372 189 357 210
+         C342 230 316 240 288 236
+         L288 211
+         C309 214 327 207 337 192
+         C347 177 345 159 332 148
+         C317 136 292 137 276 152
+         Z"
+      fill="#FFFFFF"
+    />
+
+    <path
+      d="M288 164
+         C305 153 323 158 330 170
+         C337 182 332 195 318 201
+         C308 205 297 203 288 198
+         Z"
+      fill="#FF7A00"
+    />
+  </g>
+
+  <path
+    d="M342 91
+       C357 72 380 69 397 78
+       C389 100 369 112 342 108
+       Z"
+    fill="#42B95A"
+  />
+
+  <text
+    x="256"
+    y="405"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="72"
+    font-weight="900"
+    letter-spacing="-3"
+    fill="#FFFFFF">
+    FOODY
+  </text>
+
+  <rect
+    x="190"
+    y="423"
+    width="132"
+    height="7"
+    rx="3.5"
+    fill="#FFFFFF"
+    opacity="0.8"
+  />
+</svg>
