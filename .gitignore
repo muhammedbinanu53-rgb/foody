@@ -5,3 +5,9 @@ node_modules/
 dist/
 build/
 .DS_Store
+
+
+cd ~/Desktop/foody
+git add backend/server.js
+git commit -m "Allow Netlify frontend"
+git push
