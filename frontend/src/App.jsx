@@ -5,8 +5,7 @@ import "./App.css";
 
 const API_URL =
   import.meta.env.VITE_API_URL ||
-  "https://gallery-breeding-isolated-patients.trycloudflare.com";
-
+  "https://people-achievement-started-poetry.trycloudflare.com";
 const PAYMENT_METHODS = [
   {
     id: "OPay",

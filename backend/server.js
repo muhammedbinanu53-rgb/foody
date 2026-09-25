@@ -5,7 +5,7 @@ const path = require("path");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
-require("dotenv").config();
+require("dotenv").config(); 
 
 const app = express();
 
@@ -151,9 +151,7 @@ function saveOrders(orders) {
 /*
 =========================================================
 EMAIL
-=========================================================
-*/
-
+===================================================*/
 let transporter = null;
 
 if (
@@ -161,22 +159,20 @@ if (
   process.env.GMAIL_APP_PASSWORD
 ) {
   transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+   host: "smtp.gmail.com",
+port: 465,
+secure: true,
+family: 4,
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
   console.log("Gmail is configured.");
 } else {
-  console.log(
-    "Gmail is not configured."
-  );
+  console.log("Gmail is not configured.");
 }
-
 /*
 =========================================================
 HELPER FUNCTIONS

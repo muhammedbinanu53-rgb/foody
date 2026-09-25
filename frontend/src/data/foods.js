@@ -211,7 +211,7 @@ const foods = [
   {
     id: 20,
     name: "Garri and Ogbono Soup ",
-    description: "spicy home made Eba Ogbono Soup.",
+    description: "spicy home made Eba and Ogbono Soup.",
     price: 2500,
     category: "Swallow",
     image:
