@@ -4,8 +4,8 @@ import Controller from "./Controller";
 import "./App.css";
 
 const API_URL =
-import.meta.env.VITE_API_URL ||
-  "https://sample-started-reproduce-manchester.trycloudflare.com";
+  import.meta.env.VITE_API_URL ||
+  "https://gallery-breeding-isolated-patients.trycloudflare.com";
 
 const PAYMENT_METHODS = [
   {
