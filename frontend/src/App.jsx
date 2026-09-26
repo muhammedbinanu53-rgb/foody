@@ -5,7 +5,7 @@ import "./App.css";
 
 const API_URL =
   import.meta.env.VITE_API_URL ||
-  "https://people-achievement-started-poetry.trycloudflare.com";
+  "https://dynamic-opponent-whereas-scenic.trycloudflare.com";
 const PAYMENT_METHODS = [
   {
     id: "OPay",
