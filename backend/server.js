@@ -24,8 +24,7 @@ const CONTROLLER_PASSWORD =
   "change-this-controller-password";
 
 const ADMIN_EMAILS = [
-  "muhammedbinanu@gmail.com",
-  "abibataghakhomomoh@gmail.com",
+  "muhammedbinanu53@gmail.com",
 ];
 
 /*
