@@ -3,9 +3,8 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 
-require("dotenv").config(); 
+require("dotenv").config();
 
 const app = express();
 
@@ -18,8 +17,7 @@ CONFIGURATION
 */
 
 const FRONTEND_URL =
-  process.env.FRONTEND_URL ||
-  "http://192.168.166.204:5173";
+  process.env.FRONTEND_URL || "http://localhost:5173";
 
 const CONTROLLER_PASSWORD =
   process.env.CONTROLLER_PASSWORD ||
@@ -27,6 +25,7 @@ const CONTROLLER_PASSWORD =
 
 const ADMIN_EMAILS = [
   "muhammedbinanu@gmail.com",
+  "abibataghakhomomoh@gmail.com",
 ];
 
 /*
@@ -42,11 +41,11 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
 ];
+
 app.use(
   cors({
     origin: function (origin, callback) {
       // Allow requests without an Origin header.
-      // This is useful for direct server requests.
       if (!origin) {
         return callback(null, true);
       }
@@ -55,23 +54,12 @@ app.use(
         return callback(null, true);
       }
 
-      /*
-        Allow LAN addresses using port 5173.
-
-        Example:
-        http://192.168.166.204:5173
-      */
-      if (
-        /^http:\/\/192\.168\.\d+\.\d+:5173$/.test(
-          origin
-        )
-      ) {
+      // Allow LAN addresses using port 5173.
+      if (/^http:\/\/192\.168\.\d+\.\d+:5173$/.test(origin)) {
         return callback(null, true);
       }
 
-      return callback(
-        new Error("CORS: Origin not allowed.")
-      );
+      return callback(new Error("CORS: Origin not allowed."));
     },
     credentials: false,
   })
@@ -150,29 +138,23 @@ function saveOrders(orders) {
 
 /*
 =========================================================
-EMAIL
-===================================================*/
-let transporter = null;
+EMAIL - RESEND
+=========================================================
+*/
 
-if (
-  process.env.GMAIL_USER &&
-  process.env.GMAIL_APP_PASSWORD
-) {
-  transporter = nodemailer.createTransport({
-   host: "smtp.gmail.com",
-port: 465,
-secure: true,
-family: 4,
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  });
+const RESEND_API_KEY =
+  process.env.RESEND_API_KEY;
 
-  console.log("Gmail is configured.");
+const RESEND_FROM_EMAIL =
+  process.env.RESEND_FROM_EMAIL ||
+  "Foody <onboarding@resend.dev>";
+
+if (RESEND_API_KEY) {
+  console.log("Resend is configured.");
 } else {
-  console.log("Gmail is not configured.");
+  console.log("Resend is not configured.");
 }
+
 /*
 =========================================================
 HELPER FUNCTIONS
@@ -248,36 +230,83 @@ function createPaymentConfirmationToken() {
 
 /*
 =========================================================
-PENDING PAYMENT EMAIL
+RESEND EMAIL HELPER
 =========================================================
 */
 
-async function sendPaymentPendingEmail(order) {
-  if (!transporter) {
+async function sendResendEmail({
+  to,
+  subject,
+  text,
+  html,
+}) {
+  if (!RESEND_API_KEY) {
     console.log(
-      "Gmail is not configured."
+      "Resend is not configured."
     );
 
     return false;
   }
 
+  try {
+    const response = await fetch(
+      "https://api.resend.com/emails",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+        },
+
+        body: JSON.stringify({
+          from: RESEND_FROM_EMAIL,
+          to,
+          subject,
+          text,
+          html,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result?.message ||
+          result?.error?.message ||
+          "Resend email request failed."
+      );
+    }
+
+    console.log(
+      "Resend email sent successfully:",
+      result?.id || "no-id"
+    );
+
+    return true;
+  } catch (error) {
+    console.error(
+      "Unable to send Resend email:",
+      error.message
+    );
+
+    return false;
+  }
+}
+
+/*
+=========================================================
+PENDING PAYMENT EMAIL
+=========================================================
+*/
+
+async function sendPaymentPendingEmail(order) {
   const itemsText =
     buildItemsText(order);
 
   const itemsHtml =
     buildItemsHtml(order);
-
-  /*
-    IMPORTANT:
-
-    This URL must point to the computer running
-    the Foody frontend.
-
-    FRONTEND_URL should be set in .env.
-
-    Example:
-    FRONTEND_URL=http://192.168.166.204:5173
-  */
 
   const controllerUrl =
     `${FRONTEND_URL}/controller` +
@@ -338,6 +367,7 @@ ${controllerUrl}
 <html>
 <head>
   <meta charset="UTF-8" />
+
   <meta
     name="viewport"
     content="width=device-width,initial-scale=1.0"
@@ -451,9 +481,7 @@ ${controllerUrl}
             font-weight:800;
             color:#222222;
           ">
-            ${escapeHtml(
-              order.orderNumber
-            )}
+            ${escapeHtml(order.orderNumber)}
           </div>
 
         </div>
@@ -480,9 +508,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Name:</strong>
-            ${escapeHtml(
-              order.customer.name
-            )}
+            ${escapeHtml(order.customer.name)}
           </p>
 
           <p style="
@@ -491,9 +517,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Phone:</strong>
-            ${escapeHtml(
-              order.customer.phone
-            )}
+            ${escapeHtml(order.customer.phone)}
           </p>
 
         </div>
@@ -520,9 +544,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Method:</strong>
-            ${escapeHtml(
-              order.paymentMethod
-            )}
+            ${escapeHtml(order.paymentMethod)}
           </p>
 
           <p style="
@@ -531,9 +553,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Order Total:</strong>
-            ${formatCurrency(
-              order.total
-            )}
+            ${formatCurrency(order.total)}
           </p>
 
           <p style="
@@ -542,9 +562,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Customer Says Paid:</strong>
-            ${formatCurrency(
-              order.amountPaid
-            )}
+            ${formatCurrency(order.amountPaid)}
           </p>
 
         </div>
@@ -596,9 +614,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Location:</strong>
-            ${escapeHtml(
-              order.location
-            )}
+            ${escapeHtml(order.location)}
           </p>
 
           <p style="
@@ -607,9 +623,7 @@ ${controllerUrl}
             color:#555555;
           ">
             <strong>Address:</strong>
-            ${escapeHtml(
-              order.address
-            )}
+            ${escapeHtml(order.address)}
           </p>
 
         </div>
@@ -642,9 +656,7 @@ ${controllerUrl}
               font-size:20px;
               color:#f59e0b;
             ">
-              ${formatCurrency(
-                order.total
-              )}
+              ${formatCurrency(order.total)}
             </strong>
 
           </div>
@@ -747,28 +759,12 @@ ${controllerUrl}
 </html>
 `;
 
-  try {
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: ADMIN_EMAILS,
-      subject: `Foody Payment Pending - ${order.orderNumber}`,
-      text: emailText,
-      html: emailHtml,
-    });
-
-    console.log(
-      `Pending payment email sent for ${order.orderNumber}`
-    );
-
-    return true;
-  } catch (error) {
-    console.error(
-      "Unable to send pending payment email:",
-      error.message
-    );
-
-    return false;
-  }
+  return await sendResendEmail({
+    to: ADMIN_EMAILS,
+    subject: `Foody Payment Pending - ${order.orderNumber}`,
+    text: emailText,
+    html: emailHtml,
+  });
 }
 
 /*
@@ -778,14 +774,6 @@ PAYMENT CONFIRMED EMAIL
 */
 
 async function sendPaymentConfirmedEmail(order) {
-  if (!transporter) {
-    console.log(
-      "Gmail is not configured."
-    );
-
-    return false;
-  }
-
   const itemsText =
     buildItemsText(order);
 
@@ -831,27 +819,11 @@ ${order.status}
 The payment has been manually confirmed by the Foody controller.
 `;
 
-  try {
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: ADMIN_EMAILS,
-      subject: `Foody Payment Confirmed - ${order.orderNumber}`,
-      text: emailText,
-    });
-
-    console.log(
-      `Confirmed payment email sent for ${order.orderNumber}`
-    );
-
-    return true;
-  } catch (error) {
-    console.error(
-      "Unable to send confirmed payment email:",
-      error.message
-    );
-
-    return false;
-  }
+  return await sendResendEmail({
+    to: ADMIN_EMAILS,
+    subject: `Foody Payment Confirmed - ${order.orderNumber}`,
+    text: emailText,
+  });
 }
 
 /*
@@ -1165,10 +1137,8 @@ app.post(
           createPaymentConfirmationToken();
       }
 
-      /*
-        Save first so the order exists even
-        if Gmail has a temporary problem.
-      */
+      // Save first so the order exists
+      // even if email has a temporary problem.
       saveOrders(orders);
 
       const emailSent =
@@ -1204,20 +1174,6 @@ app.post(
 =========================================================
 BUYER PAYMENT STATUS
 =========================================================
-
-The buyer's pending page calls this endpoint
-every few seconds.
-
-This is what allows:
-
-PENDING
-   ↓
-Controller confirms payment
-   ↓
-PAID
-   ↓
-Buyer automatically sees confirmation
-=========================================================
 */
 
 app.get(
@@ -1241,10 +1197,8 @@ app.get(
         });
       }
 
-      /*
-        Do NOT send the payment confirmation token
-        to the buyer status polling endpoint.
-      */
+      // Do NOT send the payment confirmation token
+      // to the buyer status polling endpoint.
 
       const safeOrder = {
         orderNumber:
@@ -1696,6 +1650,7 @@ app.post(
 START SERVER
 =========================================================
 */
+
 app.listen(
   PORT,
   "0.0.0.0",
